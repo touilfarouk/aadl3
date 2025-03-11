@@ -124,6 +124,64 @@ Welcome to **Free PDF Compressor**, a simple and user-friendly tool to reduce th
 - **RAM**: Minimum 2GB  
 - **Storage**: 50MB of free space
 
-## 📞 Technical Support
+# AADL 3 - Inscription, Compression PDF, Réduction de Fichier
 
-For any assistance, contact us at: [support@example.com](mailto:support@example.com)
+## 🌍 تغيير اللغة | Changer la langue
+🔹 [العربية](#aadl-3---التسجيل-ضغط-ملفات-pdf-تقليل-حجم-الملفات) | 🔹 [Français](#aadl-3---inscription-compression-pdf-réduction-de-fichier)
+
+---
+
+## 📌 AADL 3 - التسجيل، ضغط ملفات PDF، تقليل حجم الملفات
+
+### 🏠 مقدمة
+تعرف على جميع تفاصيل برنامج **AADL 3**، بما في ذلك كيفية التسجيل، وضغط ملفات PDF، وتقليل حجم الملفات المطلوبة.
+
+### 📋 المعلومات الشخصية المطلوبة
+- **اسم الأب**
+- **اسم الأم**
+- **لقب الأم**
+- **تاريخ ميلاد الأب**
+- **تاريخ ميلاد الأم**
+- **مكان ميلاد الأب**
+- **مكان ميلاد الأم**
+- **المهنة**
+- **الراتب (جوان 2024)**
+- **مكان العمل**
+
+### 📂 الملفات المطلوبة
+- **تصريح شرفي**
+- **شهادة إقامة**
+- **رقم كشف الهوية البريدية أو البنكية (RIP)**
+- **كشف الراتب (Juin)**
+- **شيك بنكي**
+- **نسخة من fiche familiale**
+
+---
+
+## 📌 AADL 3 - Inscription, Compression PDF, Réduction de Fichier
+
+### 🏠 Introduction
+Découvrez tout sur le programme **AADL 3**, y compris l'inscription, la compression de fichiers PDF et la réduction de la taille des documents requis.
+
+### 📋 Informations Personnelles Requises
+- **Nom du père**
+- **Nom de la mère**
+- **Nom de jeune fille de la mère**
+- **Date de naissance du père**
+- **Date de naissance de la mère**
+- **Lieu de naissance du père**
+- **Lieu de naissance de la mère**
+- **Profession**
+- **Salaire (Juin 2024)**
+- **Lieu de travail**
+
+### 📂 Documents Requis
+- **Déclaration sur l'honneur**
+- **Certificat de résidence**
+- **Relevé d'identité bancaire ou postale (RIP)**
+- **Fiche de paie (Juin)**
+- **Chèque bancaire**
+- **Copie de la fiche familiale**
+
+---
+
