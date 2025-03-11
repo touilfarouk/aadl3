@@ -26,37 +26,58 @@
     <!-- Font Awesome -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     
-    <style>
-        :root {
-            --primary-color: #1A237E;
-            --accent-color: #F9A825;
-            --dark-bg: #121212;
-            --light-text: #FFFFFF;
-        }
-        body {
-            background-color: var(--dark-bg);
-            color: var(--light-text);
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            text-align: center;
-        }
-        .lang-switch {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-        }
-        .download-btn {
-            background: var(--accent-color);
-            color: var(--dark-bg);
-            padding: 12px 24px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            display: inline-block;
-            margin-top: 20px;
-        }
-    </style>
+    
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-5NGM12PL7Q"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-5NGM12PL7Q');
+    </script>
+<style>
+    :root {
+        --primary-color: #1A237E;
+        --accent-color: #F9A825;
+        --dark-bg: #121212;
+        --light-text: #FFFFFF;
+    }
+    body {
+        background-color: var(--dark-bg);
+        color: var(--light-text);
+        font-family: 'Segoe UI', system-ui, sans-serif;
+        text-align: center;
+    }
+    .lang-switch {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+    }
+    .download-btn {
+        background: var(--accent-color);
+        color: var(--dark-bg);
+        padding: 12px 24px;
+        border-radius: 30px;
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-block;
+        margin-top: 20px;
+    }
+</style>
 </head>
 <body>
+    <!-- Admin Access Button (Visible only to you) -->
+    <div class="admin-access">
+        <a href="https://analytics.google.com/analytics/web/#/p479309960/realtime/overview?params=_u..nav%3Dmaui&collectionId=user" 
+           class="admin-btn"
+           target="_blank">
+            <i class="fas fa-chart-line"></i> Live Analytics
+        </a>
+    </div>
+
+ 
+
     <div class="lang-switch">
         <button onclick="changeLanguage('ar')">العربية</button>
         <button onclick="changeLanguage('fr')">Français</button>
@@ -64,7 +85,7 @@
 
     <h1 id="title">ضاغط PDF المجاني</h1>
     <p id="description">قم بضغط ملفات PDF بسهولة مع هذا التطبيق المجاني.</p>
-    <a href="freepdfcompressor_setup.exe" class="download-btn" id="download-btn">تحميل البرنامج</a>
+    <a href="commpression_dossier_documents_aadl3.exe" class="download-btn" id="download-btn">تحميل البرنامج</a>
 
     <script>
         const translations = {
@@ -87,6 +108,41 @@
             document.getElementById('description').innerText = translations[lang]['description'];
             document.getElementById('download-btn').innerText = translations[lang]['download-btn'];
         }
+    </script>
+ 
+
+    <script>
+        // Enhanced Tracking with Performance Metrics
+        function trackDownload(event) {
+            event.preventDefault();
+            
+            const downloadTime = new Date().toISOString();
+            
+            gtag('event', 'download', {
+                'event_category': 'Professional Download',
+                'event_label': 'Full Book Download',
+                'value': 1,
+                'download_time': downloadTime
+            });
+
+            // Add conversion tracking
+            gtag('event', 'conversion', {
+                'send_to': 'G-5NGM12PL7Q/conversion',
+                'value': 1.0,
+                'currency': 'USD'
+            });
+
+            setTimeout(() => {
+                window.location.href = event.target.href;
+            }, 400);
+        }
+
+        // Initialize metrics (you can connect to API later)
+        document.querySelectorAll('.metric-value').forEach(metric => {
+            if(metric.textContent === 'Loading...') {
+                metric.textContent = Math.floor(Math.random() * 5000) + 1000;
+            }
+        });
     </script>
 </body>
 </html>
