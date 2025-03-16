@@ -1,144 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AADL 3 - Inscription, Compression PDF, Réduction de Fichier</title>
-
-    <!-- SEO Meta Tags -->
-    <meta name="description" content="Découvrez tout sur AADL 3 : inscription, compression PDF, réduction de la taille des fichiers et plus encore. Guide complet pour faciliter votre processus AADL 3.">
-    <meta name="keywords" content="AADL 3, AADL 3 Inscription, AADL 3 Compression PDF, AADL 3 Réduction de Fichier, Réduire Taille Fichier AADL 3">
-    <meta name="author" content="Votre Nom">
-    <meta name="robots" content="index, follow">
+    <title>Compress PDF</title>
     
-    <!-- Open Graph Meta Tags (for Facebook & LinkedIn) -->
-    <meta property="og:title" content="AADL 3 - Inscription, Compression PDF, Réduction de Fichier">
-    <meta property="og:description" content="Découvrez tout sur AADL 3 : inscription, compression PDF, réduction de la taille des fichiers et plus encore.">
-    <meta property="og:image" content="https://https://touilfarouk.github.io/aadl3/image-aadl3.jpg">
-    <meta property="og:url" content="https://https://touilfarouk.github.io/aadl3/aadl3">
-    <meta property="og:type" content="website">
-
-    <!-- Twitter Meta Tags -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="AADL 3 - Inscription, Compression PDF, Réduction de Fichier">
-    <meta name="twitter:description" content="Tout sur AADL 3 : inscription, compression PDF, réduction de la taille des fichiers et astuces pratiques.">
-    <meta name="twitter:image" content="https://https://touilfarouk.github.io/aadl3/image-aadl3.jpg">
-
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     
-    
-    
+    <!-- PDF.js & jsPDF -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
-
-<style>
-    :root {
-        --primary-color: #1A237E;
-        --accent-color: #F9A825;
-        --dark-bg: #121212;
-        --light-text: #FFFFFF;
-    }
-    body {
-        background-color: var(--dark-bg);
-        color: var(--light-text);
-        font-family: 'Segoe UI', system-ui, sans-serif;
-        text-align: center;
-    }
-    .lang-switch {
-        position: absolute;
-        top: 20px;
-        left: 20px;
-    }
-    .download-btn {
-        background: var(--accent-color);
-        color: var(--dark-bg);
-        padding: 12px 24px;
-        border-radius: 30px;
-        text-decoration: none;
-        font-weight: 600;
-        display: inline-block;
-        margin-top: 20px;
-    }
-</style>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+        .container {
+            max-width: 500px;
+            margin-top: 50px;
+        }
+    </style>
 </head>
- 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-5NGM12PL7Q"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-5NGM12PL7Q');
-</script>
 <body>
 
- 
+<div class="container">
+    <div class="card shadow-lg">
+        <div class="card-body text-center">
+            <h2 class="mb-3">Compress PDF File</h2>
+            
+            <div class="mb-3">
+                <input type="file" id="pdfInput" class="form-control" accept="application/pdf">
+            </div>
+            
+            <button class="btn btn-primary w-100" onclick="compressPDF()">
+                <i class="bi bi-file-earmark-arrow-down"></i> Compress PDF
+            </button>
 
-    <div class="lang-switch">
-        <button onclick="changeLanguage('ar')">العربية</button>
-        <button onclick="changeLanguage('fr')">Français</button>
+            <!-- Progress Bar -->
+            <div class="progress mt-3 d-none" id="progressBarContainer">
+                <div class="progress-bar progress-bar-striped progress-bar-animated" 
+                     role="progressbar" style="width: 0%;" id="progressBar"></div>
+            </div>
+        </div>
     </div>
+</div>
 
-    <h1 id="title">ضاغط PDF المجاني</h1>
-    <p id="description">قم بضغط ملفات PDF بسهولة مع هذا التطبيق المجاني.</p>
-    <a href="commpression_dossier_documents_aadl3.exe" target="__blank" class="download-btn" id="download-btn">تحميل البرنامج</a>
+<!-- Bootstrap Icons -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 
-    <script>
-        const translations = {
-            'ar': {
-                'title': 'ضاغط PDF المجاني',
-                'description': 'قم بضغط ملفات PDF بسهولة مع هذا التطبيق المجاني.',
-                'download-btn': 'تحميل البرنامج'
-            },
-            'fr': {
-                'title': 'Compresseur PDF Gratuit',
-                'description': 'Compressez facilement vos fichiers PDF avec cette application gratuite.',
-                'download-btn': 'Télécharger application'
-            }
-        };
+<script>
+async function compressPDF() {
+    const fileInput = document.getElementById('pdfInput');
+    if (!fileInput.files.length) {
+        alert('Please select a PDF file!');
+        return;
+    }
 
-        function changeLanguage(lang) {
-            document.documentElement.lang = lang;
-            document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-            document.getElementById('title').innerText = translations[lang]['title'];
-            document.getElementById('description').innerText = translations[lang]['description'];
-            document.getElementById('download-btn').innerText = translations[lang]['download-btn'];
-        }
-    </script>
- 
+    const file = fileInput.files[0];
+    const reader = new FileReader();
+    
+    // Show progress bar
+    document.getElementById('progressBarContainer').classList.remove('d-none');
+    document.getElementById('progressBar').style.width = "0%";
 
-    <script>
-        // Enhanced Tracking with Performance Metrics
-        function trackDownload(event) {
-            event.preventDefault();
+    reader.onload = async function (event) {
+        const { jsPDF } = window.jspdf;
+        const pdfData = new Uint8Array(event.target.result);
+
+        try {
+            const pdf = await pdfjsLib.getDocument({ data: pdfData }).promise;
+            const newPDF = new jsPDF();
             
-            const downloadTime = new Date().toISOString();
-            
-            gtag('event', 'download', {
-                'event_category': 'Professional Download',
-                'event_label': 'Full Book Download',
-                'value': 1,
-                'download_time': downloadTime
-            });
+            for (let i = 0; i < pdf.numPages; i++) {
+                document.getElementById('progressBar').style.width = ((i + 1) / pdf.numPages * 100) + "%";
 
-            // Add conversion tracking
-            gtag('event', 'conversion', {
-                'send_to': 'G-5NGM12PL7Q/conversion',
-                'value': 1.0,
-                'currency': 'USD'
-            });
-
-            setTimeout(() => {
-                window.location.href = event.target.href;
-            }, 400);
-        }
-
-        // Initialize metrics (you can connect to API later)
-        document.querySelectorAll('.metric-value').forEach(metric => {
-            if(metric.textContent === 'Loading...') {
-                metric.textContent = Math.floor(Math.random() * 5000) + 1000;
+                const imgData = await renderPageToImage(pdf, i + 1);
+                if (i !== 0) newPDF.addPage();
+                newPDF.addImage(imgData, 'JPEG', 5, 5, 200, 280); 
             }
-        });
-    </script>
+
+            newPDF.save('compressed.pdf');
+            alert('Compression Complete!');
+            document.getElementById('progressBarContainer').classList.add('d-none');
+
+        } catch (error) {
+            console.error('Error compressing PDF:', error);
+            alert('Error compressing PDF. See console for details.');
+        }
+    };
+
+    reader.readAsArrayBuffer(file);
+}
+
+// Convert PDF page to compressed image
+async function renderPageToImage(pdf, pageNum) {
+    const page = await pdf.getPage(pageNum);
+    const scale = 0.5; // Reduce scale for compression
+    const viewport = page.getViewport({ scale });
+
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    await page.render({ canvasContext: context, viewport }).promise;
+
+    return new Promise(resolve => canvas.toBlob(blob => {
+        const reader = new FileReader();
+        reader.onloadend = () => resolve(reader.result);
+        reader.readAsDataURL(blob);
+    }, 'image/jpeg', 0.6));
+}
+</script>
+
 </body>
 </html>
