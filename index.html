@@ -7,7 +7,7 @@
     
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    
+
     <!-- PDF.js & jsPDF -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
@@ -40,13 +40,15 @@
 
             <div class="mb-3">
                 <label for="targetSize"><strong>حدد الحجم المطلوب (كيلوبايت):</strong></label>
-                <input type="number" id="targetSize" class="form-control" min="10" placeholder="مثلاً 500">
+                <input type="number" id="targetSize" class="form-control" min="10" placeholder="مثلاً 500" oninput="calculateEstimatedCompression()">
             </div>
 
             <div class="mb-3">
                 <p><strong>الحجم الأصلي:</strong> <span id="originalSize" class="result">غير متوفر</span></p>
-                <p><strong>الحجم بعد الضغط:</strong> <span id="compressedSize" class="result">غير متوفر</span></p>
-                <p><strong>نسبة الضغط:</strong> <span id="compressionRatio" class="result">غير متوفر</span></p>
+                <p><strong>الحجم المتوقع بعد الضغط:</strong> <span id="estimatedSize" class="result">غير متوفر</span></p>
+                <p><strong>نسبة الضغط المتوقعة:</strong> <span id="estimatedCompressionRatio" class="result">غير متوفر</span></p>
+                <p><strong>الحجم الفعلي بعد الضغط:</strong> <span id="compressedSize" class="result">غير متوفر</span></p>
+                <p><strong>نسبة الضغط الفعلية:</strong> <span id="compressionRatio" class="result">غير متوفر</span></p>
             </div>
             
             <button class="btn btn-primary w-100" onclick="compressPDF()">
@@ -62,15 +64,30 @@
     </div>
 </div>
 
-<!-- Bootstrap Icons -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
-
 <script>
+let originalSizeKB = 0;
+
 function showFileSize() {
     const fileInput = document.getElementById('pdfInput');
     if (fileInput.files.length) {
         const file = fileInput.files[0];
-        document.getElementById('originalSize').textContent = (file.size / 1024).toFixed(2) + " كيلوبايت";
+        originalSizeKB = (file.size / 1024).toFixed(2);
+        document.getElementById('originalSize').textContent = originalSizeKB + " كيلوبايت";
+        calculateEstimatedCompression();  // تحديث التقديرات عند تحديد الملف
+    }
+}
+
+function calculateEstimatedCompression() {
+    const targetSizeKB = document.getElementById('targetSize').value;
+    
+    if (originalSizeKB > 0 && targetSizeKB > 0) {
+        const estimatedRatio = ((1 - (targetSizeKB / originalSizeKB)) * 100).toFixed(2);
+        
+        document.getElementById('estimatedSize').textContent = targetSizeKB + " كيلوبايت";
+        document.getElementById('estimatedCompressionRatio').textContent = estimatedRatio + "%";
+    } else {
+        document.getElementById('estimatedSize').textContent = "غير متوفر";
+        document.getElementById('estimatedCompressionRatio').textContent = "غير متوفر";
     }
 }
 
@@ -128,7 +145,6 @@ async function compressPDF() {
             document.getElementById('compressedSize').textContent = compressedSizeKB + " كيلوبايت";
 
             // حساب نسبة الضغط
-            const originalSizeKB = file.size / 1024;
             const compressionRatio = ((1 - (compressedSizeKB / originalSizeKB)) * 100).toFixed(2);
             document.getElementById('compressionRatio').textContent = compressionRatio + "%";
 
@@ -145,10 +161,9 @@ async function compressPDF() {
     reader.readAsArrayBuffer(file);
 }
 
-// تحويل صفحة PDF إلى صورة مضغوطة
 async function renderPageToImage(pdf, pageNum, quality) {
     const page = await pdf.getPage(pageNum);
-    const scale = 0.5; // تقليل الحجم للضغط
+    const scale = 0.5;
     const viewport = page.getViewport({ scale });
 
     const canvas = document.createElement('canvas');
