@@ -30,7 +30,13 @@
             <h2 class="mb-3">Compress PDF File</h2>
             
             <div class="mb-3">
-                <input type="file" id="pdfInput" class="form-control" accept="application/pdf">
+                <input type="file" id="pdfInput" class="form-control" accept="application/pdf" onchange="showFileSize()">
+            </div>
+
+            <div class="mb-3">
+                <p><strong>Original Size:</strong> <span id="originalSize">N/A</span></p>
+                <p><strong>Compressed Size:</strong> <span id="compressedSize">N/A</span></p>
+                <p><strong>Compression Ratio:</strong> <span id="compressionRatio">N/A</span></p>
             </div>
             
             <button class="btn btn-primary w-100" onclick="compressPDF()">
@@ -50,6 +56,14 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.js"></script>
 
 <script>
+function showFileSize() {
+    const fileInput = document.getElementById('pdfInput');
+    if (fileInput.files.length) {
+        const file = fileInput.files[0];
+        document.getElementById('originalSize').textContent = (file.size / 1024).toFixed(2) + " KB";
+    }
+}
+
 async function compressPDF() {
     const fileInput = document.getElementById('pdfInput');
     if (!fileInput.files.length) {
@@ -79,6 +93,16 @@ async function compressPDF() {
                 if (i !== 0) newPDF.addPage();
                 newPDF.addImage(imgData, 'JPEG', 5, 5, 200, 280); 
             }
+
+            // Convert to Blob and get size
+            const compressedBlob = newPDF.output('blob');
+            const compressedSizeKB = (compressedBlob.size / 1024).toFixed(2);
+            document.getElementById('compressedSize').textContent = compressedSizeKB + " KB";
+
+            // Calculate compression ratio
+            const originalSizeKB = file.size / 1024;
+            const compressionRatio = ((1 - (compressedSizeKB / originalSizeKB)) * 100).toFixed(2);
+            document.getElementById('compressionRatio').textContent = compressionRatio + "%";
 
             newPDF.save('compressed.pdf');
             alert('Compression Complete!');
